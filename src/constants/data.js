@@ -5,7 +5,7 @@ export const BG = "#070707";
 export const SURFACE = "#0e0c08";
 
 // ─── Admin ───────────────────────────────────────────────────────────────────
-export const ADMIN_PASS = "ibzas20256";
+export const ADMIN_PASS = "ibzas2025";
 
 // ─── Default Data ────────────────────────────────────────────────────────────
 export const DEFAULT_PRODUCTS = [
