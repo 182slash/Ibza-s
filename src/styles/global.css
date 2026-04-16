@@ -1105,3 +1105,125 @@ textarea.form-input {
   /* ensure it sits above the image */
   z-index: 2;
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ── Mobile  (max-width: 768px)
+   DESKTOP STYLES ARE UNTOUCHED. Every rule below is additive / override only.
+   ═══════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+
+  /* ── Nav ── */
+  nav {
+    padding: 0 20px;
+    height: 72px;
+  }
+
+  .nav-links {
+    display: none; /* hidden until hamburger is added in Nav.jsx */
+  }
+
+  .nav-logo {
+    margin: 0;
+  }
+
+  /* ── Section spacing ── */
+  section {
+    padding: 72px 20px;
+  }
+
+  /* ── Hero ── */
+  .hero-h1 {
+    font-size: clamp(40px, 12vw, 64px);
+  }
+
+  .hero-sub {
+    font-size: 11px;
+    letter-spacing: 2px;
+  }
+
+  .hero-ctas {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* ── About strip: 4-col → 2-col ── */
+  .about-strip {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .about-stat {
+    padding: 32px 24px;
+  }
+
+  .stat-num {
+    font-size: 38px;
+  }
+
+  /* ── Shop grid: auto-fill already responsive, min-width needs lowering ── */
+  .shop-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* ── Event card: fixed 380px col → full stacked ── */
+  .event-card {
+    grid-template-columns: 1fr;
+  }
+
+  .event-img {
+    height: 200px;
+    width: 100%;
+  }
+
+  .event-body {
+    padding: 28px 20px;
+  }
+
+  .event-title {
+    font-size: 26px;
+  }
+
+  /* ── Footer grid: 3-col → 1-col ── */
+  .footer {
+    padding: 56px 20px 32px;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    margin-bottom: 40px;
+  }
+
+  .footer-strip {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  /* ── Cart drawer: full-width on mobile ── */
+  .cart-drawer {
+    width: 100vw;
+  }
+
+  /* ── Modal ── */
+  .modal {
+    padding: 28px 20px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  /* ── Admin ── */
+  .admin-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-sidebar {
+    display: none; /* collapsed on mobile */
+  }
+
+  .admin-main {
+    padding: 28px 20px;
+  }
+
+}

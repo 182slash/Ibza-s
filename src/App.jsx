@@ -62,6 +62,7 @@ export default function App() {
         navigate={navigate}
         cartCount={cartCount}
         onCartOpen={() => setCartOpen(true)}
+        onCartClose={() => setCartOpen(false)}
       />
 
       {/* Pages */}

@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react"; // Added this
+import { useState, useEffect } from "react";
 import HeroLogo from "../components/HeroLogo";
 
 const ease = [0.22, 1, 0.36, 1];
@@ -19,7 +19,6 @@ function lineReveal(delay = 0) {
 }
 
 export default function HomePage({ events, navigate }) {
-  // 1. Live Time Logic
   const [jakartaTime, setJakartaTime] = useState(new Date());
 
   useEffect(() => {
@@ -31,24 +30,128 @@ export default function HomePage({ events, navigate }) {
     timeZone: "Asia/Jakarta", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: true,
   });
 
-  const hourWIB = parseInt(new Intl.DateTimeFormat('en-US', { 
-    timeZone: 'Asia/Jakarta', hour: 'numeric', hour12: false 
+  const hourWIB = parseInt(new Intl.DateTimeFormat('en-US', {
+    timeZone: 'Asia/Jakarta', hour: 'numeric', hour12: false
   }).format(jakartaTime));
 
   const isOpen = hourWIB >= 12 || hourWIB < 2;
 
-  // 2. RESTORE THIS LINE (The one that was missing):
   const upcoming = [...events]
     .sort((a, b) => new Date(a.date) - new Date(b.date))
     .slice(0, 2);
-
-  // ... rest of your return statement
 
   return (
     <div style={{ paddingTop: 0 }}>
 
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300&family=Montserrat:wght@300;400;500;600&family=Great+Vibes&family=Cinzel:wght@400;500&display=swap');
+
+        /* ── MOBILE FIXES ── */
+        @media (max-width: 768px) {
+
+          .logo-text-left {
+            font-size: 7.5rem !important; 
+            text-align: center;
+            display: block !important;
+            
+            /* ── FREE MOVEMENT SETTINGS ── */
+            position: relative !important;
+            z-index: 999 !important; /* Brings text forward */
+            
+            /* UPDATED: -20% horizontal (left), 10% vertical (down) */
+            transform: translate(-77%, 22%) !important;
+            
+            margin-top: 0 !important;
+            margin-right: 0 !important;
+            margin-left: 0 !important; 
+          }
+
+          .logo-text-right {
+            margin-top: 0 !important;
+            margin-left: 0 !important;
+            text-align: center;
+            align-items: center;
+          }
+          .logo-text-right span:first-child { font-size: 2rem !important; }
+          .logo-text-right span:last-child  { font-size: 2.8rem !important; }
+
+          .logo-row {
+            flex-direction: column !important;
+            gap: 0 !important;
+          }
+          .logo-row > div { width: 140px !important; }
+
+          .hero-cta-row {
+            flex-direction: column !important;
+            align-items: center !important;
+            gap: 16px !important;
+            width: 100%;
+          }
+          .lux-btn-solid, .lux-btn-tropical {
+            width: 80% !important;
+            text-align: center !important;
+          }
+
+          section[style*="grid-template-columns: 1fr 1fr"] {
+            grid-template-columns: 1fr !important;
+            gap: 40px !important;
+          }
+
+          .score-grid {
+            grid-template-columns: 1fr 1fr !important;
+            gap: 10px !important;
+          }
+
+          .events-grid {
+            grid-template-columns: 1fr !important;
+          }
+
+          .events-header {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: 24px !important;
+          }
+
+          .about-section {
+            grid-template-columns: 1fr !important;
+            gap: 40px !important;
+          }
+
+          .section-title { font-size: 32px !important; }
+
+          .about-strip { flex-wrap: wrap !important; }
+          .about-stat  { flex: 0 0 50% !important; }
+
+          .hero-descriptor-lux {
+            font-size: 9px !important;
+            letter-spacing: 0.12em !important;
+          }
+        }
+
+        /* ── DESKTOP & GLOBAL STYLES ── */
+        .logo-text-left {
+          font-family: 'Great Vibes', cursive;
+          font-size: 10rem;
+          color: #ff3131;
+          text-shadow: 0 0 15px rgba(255, 49, 49, 0.8);
+          margin-top: 140px;
+          margin-right: -105px;
+          z-index: 11;
+          white-space: nowrap;
+        }
+
+        .logo-text-right {
+          display: flex;
+          flex-direction: column;
+          font-family: 'Cinzel', serif;
+          color: #d4af37;
+          letter-spacing: 0.2rem;
+          margin-top: 140px;
+          margin-left: -105px;
+          z-index: 11;
+          text-align: left;
+          line-height: 0.9;
+        }
 
         @keyframes waveFloat1 {
           0% { transform: translate(0%, 0%) rotate(0deg) scale(1); }
@@ -66,7 +169,7 @@ export default function HomePage({ events, navigate }) {
           100% { transform: translate(0%, 0%) scale(1); }
         }
         @keyframes vignettePulse {
-          0%, 100% { opacity: 1;    }
+          0%, 100% { opacity: 1; }
           50%       { opacity: 0.88; }
         }
         @keyframes grainShift {
@@ -83,21 +186,20 @@ export default function HomePage({ events, navigate }) {
           0%   { background-position: -200% center; }
           100% { background-position: 200% center; }
         }
-
-      @keyframes scrollGlow {
-  0%, 100% { 
-    color: rgba(201,168,76,0.6);
-    text-shadow: 0 0 8px rgba(201,168,76,0.8), 0 0 20px rgba(201,168,76,0.5);
-  }
-  33% { 
-    color: rgba(255,100,100,1);
-    text-shadow: 0 0 12px #ff3131, 0 0 30px rgba(255,49,49,0.9), 0 0 60px rgba(255,49,49,0.5);
-  }
-  66% { 
-    color: rgba(255,255,255,1);
-    text-shadow: 0 0 12px #fff, 0 0 30px rgba(255,255,255,0.8), 0 0 60px rgba(201,168,76,0.6);
-  }
-}
+        @keyframes scrollGlow {
+          0%, 100% {
+            color: rgba(201,168,76,0.6);
+            text-shadow: 0 0 8px rgba(201,168,76,0.8), 0 0 20px rgba(201,168,76,0.5);
+          }
+          33% {
+            color: rgba(255,100,100,1);
+            text-shadow: 0 0 12px #ff3131, 0 0 30px rgba(255,49,49,0.9), 0 0 60px rgba(255,49,49,0.5);
+          }
+          66% {
+            color: rgba(255,255,255,1);
+            text-shadow: 0 0 12px #fff, 0 0 30px rgba(255,255,255,0.8), 0 0 60px rgba(201,168,76,0.6);
+          }
+        }
 
         .hero-rule {
           height: 0.5px;
@@ -121,7 +223,6 @@ export default function HomePage({ events, navigate }) {
           color: rgba(255,255,255,0.85);
         }
 
-        /* ── SOLID (Upcoming Events) ── */
         .lux-btn-solid {
           font-family: 'Montserrat', sans-serif;
           font-weight: 600;
@@ -157,164 +258,111 @@ export default function HomePage({ events, navigate }) {
           animation: tropicalShimmer 0.8s ease forwards;
         }
 
-        /* ── TROPICAL (Wine & Liquor Shop) — straight edges, leaf on hover ── */
-.lux-btn-tropical {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 600;
-  font-size: 10.5px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  padding: 15px 52px 15px 44px;
-  border-radius: 0px;
-  background: transparent;
-  color: rgba(220,140,60,0.9);
-  border-top: 1px solid rgba(220,140,60,0.55);
-  border-bottom: 1px solid rgba(220,140,60,0.55);
-  border-left: none;
-  border-right: none;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  clip-path: none;
-  transition: color 0.4s ease, padding-right 0.4s ease, transform 0.35s ease, border-color 0.4s ease;
-  box-shadow: none;
-}
-.lux-btn-tropical::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: rgba(220,140,60,0);
-  transition: background 0.4s ease, box-shadow 0.4s ease;
-  z-index: 0;
-  pointer-events: none;
-}
-.lux-btn-tropical::before { top: 0; }
-.lux-btn-tropical-bottom::before { bottom: 0; }
-.lux-btn-tropical::after {
-  content: '🌿';
-  position: absolute;
-  right: 14px;
-  top: 50%;
-  transform: translateY(-50%) rotate(0deg) scale(0.7);
-  font-size: 14px;
-  opacity: 0;
-  transition: transform 0.5s ease, opacity 0.4s ease;
-  z-index: 2;
-}
-.lux-btn-tropical span {
-  position: relative;
-  z-index: 2;
-}
-.lux-btn-tropical:hover {
-  color: #fde8c0;
-  padding-right: 52px;
-  border-top: 1px solid rgba(220,140,60,1);
-  border-bottom: 1px solid rgba(220,140,60,1);
-  transform: translateY(-2px);
-  box-shadow: none;
-  filter: drop-shadow(0 -1px 6px rgba(220,140,60,0.7)) drop-shadow(0 1px 6px rgba(220,140,60,0.7));
-}
-.lux-btn-tropical:hover::after {
-  opacity: 1;
-  transform: translateY(-50%) rotate(25deg) scale(1.15);
-}
-
-/* ── VIEW ALL EVENTS: High Contrast Character Version ── */
-
-@keyframes arrowPoint {
-  0%   { opacity: 0;   transform: translateX(-5px) rotate(45deg); }
-  50%  { opacity: 1; }
-  100% { opacity: 0;   transform: translateX(5px) rotate(45deg); }
-}
-
-@keyframes vividGlow {
-  0%, 100% { 
-    text-shadow: 0 0 8px rgba(212, 175, 55, 0.3); 
-    color: #d4af37; /* Bright, solid gold */
-  }
-  50% { 
-    /* Sharp Neon Red Glow */
-    text-shadow: 0 0 15px #ff3131, 0 0 30px rgba(255, 49, 49, 0.6); 
-    color: #ffffff; /* White text at peak for max readability */
-  }
-}
-
-body .btn-text-only {
-  all: unset; 
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 600; /* Bolder text */
-  font-size: 12px; 
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 15px;
-  color: #d4af37; /* Solid gold, no transparency */
-  background: transparent !important;
-  transition: all 0.4s ease;
-  padding: 10px 0;
-}
-
-body .btn-text-only .arrows-lead {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-}
-
-body .btn-text-only .arrows-lead i {
-  box-sizing: border-box;
-  display: block;
-  width: 7px; /* Thicker arrows */
-  height: 7px;
-  border-top: 2px solid rgba(212, 175, 55, 0.9);
-  border-right: 2px solid rgba(212, 175, 55, 0.9);
-  transform: rotate(45deg);
-  opacity: 0;
-  animation: arrowPoint 2.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-}
-
-body .btn-text-only .arrows-lead i:nth-child(1) { animation-delay: 0s; }
-body .btn-text-only .arrows-lead i:nth-child(2) { animation-delay: 0.3s; }
-body .btn-text-only .arrows-lead i:nth-child(3) { animation-delay: 0.6s; }
-
-body .btn-text-only:hover span {
-  animation: vividGlow 1.5s ease-in-out infinite; 
-}
-
-body .btn-text-only:hover .arrows-lead i {
-  border-color: #ff3131 !important; 
-  filter: drop-shadow(0 0 5px #ff3131);
-}
-
-body .btn-text-only:active {
-  transform: scale(0.95);
-}
-
-        .logo-text-left {
-          font-family: 'Great Vibes', cursive;
-          font-size: 10rem;
-          color: #ff3131;
-          text-shadow: 0 0 15px rgba(255, 49, 49, 0.8);
-          margin-top: 140px;
-          margin-right: -105px;
-          z-index: 11;
-          white-space: nowrap;
+        .lux-btn-tropical {
+          font-family: 'Montserrat', sans-serif;
+          font-weight: 600;
+          font-size: 10.5px;
+          letter-spacing: 0.22em;
+          text-transform: uppercase;
+          padding: 15px 52px 15px 44px;
+          border-radius: 0px;
+          background: transparent;
+          color: rgba(220,140,60,0.9);
+          border-top: 1px solid rgba(220,140,60,0.55);
+          border-bottom: 1px solid rgba(220,140,60,0.55);
+          border-left: none;
+          border-right: none;
+          cursor: pointer;
+          position: relative;
+          overflow: hidden;
+          transition: color 0.4s ease, padding-right 0.4s ease, transform 0.35s ease, border-color 0.4s ease;
+          box-shadow: none;
         }
-        .logo-text-right {
-          display: flex;
-          flex-direction: column;
-          font-family: 'Cinzel', serif;
+        .lux-btn-tropical::before {
+          content: '';
+          position: absolute;
+          left: 0;
+          right: 0;
+          height: 1px;
+          background: rgba(220,140,60,0);
+          transition: background 0.4s ease, box-shadow 0.4s ease;
+          z-index: 0;
+          pointer-events: none;
+          top: 0;
+        }
+        .lux-btn-tropical::after {
+          content: '🌿';
+          position: absolute;
+          right: 14px;
+          top: 50%;
+          transform: translateY(-50%) rotate(0deg) scale(0.7);
+          font-size: 14px;
+          opacity: 0;
+          transition: transform 0.5s ease, opacity 0.4s ease;
+          z-index: 2;
+        }
+        .lux-btn-tropical span {
+          position: relative;
+          z-index: 2;
+        }
+        .lux-btn-tropical:hover {
+          color: #fde8c0;
+          padding-right: 52px;
+          border-top: 1px solid rgba(220,140,60,1);
+          border-bottom: 1px solid rgba(220,140,60,1);
+          transform: translateY(-2px);
+          box-shadow: none;
+          filter: drop-shadow(0 -1px 6px rgba(220,140,60,0.7)) drop-shadow(0 1px 6px rgba(220,140,60,0.7));
+        }
+        .lux-btn-tropical:hover::after {
+          opacity: 1;
+          transform: translateY(-50%) rotate(25deg) scale(1.15);
+        }
+
+        body .btn-text-only {
+          all: unset;
+          font-family: 'Montserrat', sans-serif;
+          font-weight: 600;
+          font-size: 12px;
+          letter-spacing: 4px;
+          text-transform: uppercase;
+          cursor: pointer;
+          display: inline-flex;
+          align-items: center;
+          gap: 15px;
           color: #d4af37;
-          letter-spacing: 0.2rem;
-          margin-top: 140px;
-          margin-left: -105px;
-          z-index: 11;
-          text-align: left;
-          line-height: 0.9;
+          background: transparent !important;
+          transition: all 0.4s ease;
+          padding: 10px 0;
         }
+        body .btn-text-only .arrows-lead {
+          display: inline-flex;
+          align-items: center;
+          gap: 5px;
+        }
+        body .btn-text-only .arrows-lead i {
+          box-sizing: border-box;
+          display: block;
+          width: 7px;
+          height: 7px;
+          border-top: 2px solid rgba(212, 175, 55, 0.9);
+          border-right: 2px solid rgba(212, 175, 55, 0.9);
+          transform: rotate(45deg);
+          opacity: 0;
+          animation: arrowPoint 2.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+        body .btn-text-only .arrows-lead i:nth-child(1) { animation-delay: 0s; }
+        body .btn-text-only .arrows-lead i:nth-child(2) { animation-delay: 0.3s; }
+        body .btn-text-only .arrows-lead i:nth-child(3) { animation-delay: 0.6s; }
+        body .btn-text-only:hover span {
+          animation: vividGlow 1.5s ease-in-out infinite;
+        }
+        body .btn-text-only:hover .arrows-lead i {
+          border-color: #ff3131 !important;
+          filter: drop-shadow(0 0 5px #ff3131);
+        }
+        body .btn-text-only:active { transform: scale(0.95); }
+
         .flicker-text { animation: neonShortage 4s infinite; }
         @keyframes neonShortage {
           0%, 18%, 22%, 25%, 53%, 57%, 100% {
@@ -356,89 +404,88 @@ body .btn-text-only:active {
         }
         .status-v-bar {
           width: 1px;
-          height: 50px; /* Increased height for better vertical bar look */
+          height: 50px;
           background: linear-gradient(to bottom, #c9a84c 0%, transparent 100%);
           margin-top: 10px;
           margin-bottom: 5px;
         }
-
       `}</style>
 
-      <div className="hero" style={{ 
-  overflow: "hidden", 
-  position: "relative", 
-  background: "#07050d",
-  minHeight: "100vh",
-  marginTop: 0
-}}>
-  {/* Base backdrop - replaces the red-tinted radial */}
-<div aria-hidden="true" style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 140% 100% at 50% 100%, #0c1c12 0%, #07050d 45%, #1c1205 100%)", zIndex: 0 }} />
+      <div className="hero" style={{
+        overflow: "hidden",
+        position: "relative",
+        background: "#07050d",
+        minHeight: "100vh",
+        marginTop: 0
+      }}>
+        {/* Base backdrop */}
+        <div aria-hidden="true" style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 140% 100% at 50% 100%, #0c1c12 0%, #07050d 45%, #1c1205 100%)", zIndex: 0 }} />
 
-{/* Floating orb 1 - green tint instead of red */}
-<div aria-hidden="true" style={{ position: "absolute", top: "-20%", left: "-10%", width: "75vw", height: "75vw", background: "radial-gradient(ellipse at center, rgba(12,28,18,0.85) 0%, transparent 60%)", filter: "blur(90px)", animation: "waveFloat1 22s ease-in-out infinite", zIndex: 1, pointerEvents: "none" }} />
+        {/* Floating orb 1 */}
+        <div aria-hidden="true" style={{ position: "absolute", top: "-20%", left: "-10%", width: "75vw", height: "75vw", background: "radial-gradient(ellipse at center, rgba(12,28,18,0.85) 0%, transparent 60%)", filter: "blur(90px)", animation: "waveFloat1 22s ease-in-out infinite", zIndex: 1, pointerEvents: "none" }} />
 
-{/* Floating orb 2 - warm brown tint instead of gold */}
-<div aria-hidden="true" style={{ position: "absolute", top: "10%", right: "-20%", width: "85vw", height: "85vw", background: "radial-gradient(ellipse at center, rgba(28,18,5,0.75) 0%, transparent 60%)", filter: "blur(100px)", animation: "waveFloat2 28s ease-in-out infinite", zIndex: 1, pointerEvents: "none" }} />
+        {/* Floating orb 2 */}
+        <div aria-hidden="true" style={{ position: "absolute", top: "10%", right: "-20%", width: "85vw", height: "85vw", background: "radial-gradient(ellipse at center, rgba(28,18,5,0.75) 0%, transparent 60%)", filter: "blur(100px)", animation: "waveFloat2 28s ease-in-out infinite", zIndex: 1, pointerEvents: "none" }} />
 
-{/* Add a third orb for the deep purple mid-center from the nav */}
-<div aria-hidden="true" style={{ position: "absolute", top: "30%", left: "25%", width: "60vw", height: "60vw", background: "radial-gradient(ellipse at center, rgba(7,5,13,0.9) 0%, transparent 60%)", filter: "blur(80px)", animation: "waveFloat3 18s ease-in-out infinite", zIndex: 1, pointerEvents: "none" }} />
-  
-  <motion.div initial="hidden" animate="show" style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", zIndex: 10, textAlign: "center", padding: "0 24px" }}>
-    
-    {/* ── LIVE STATUS WIDGET ── */}
-    <motion.div variants={fadeUp(0.1, 1.2)} className="status-widget">
-      <div className="status-badge">
-        <span className="status-dot" />
-        {isOpen ? "WE ARE OPEN" : "CLOSED"}
+        {/* Floating orb 3 */}
+        <div aria-hidden="true" style={{ position: "absolute", top: "30%", left: "25%", width: "60vw", height: "60vw", background: "radial-gradient(ellipse at center, rgba(7,5,13,0.9) 0%, transparent 60%)", filter: "blur(80px)", animation: "waveFloat3 18s ease-in-out infinite", zIndex: 1, pointerEvents: "none" }} />
+
+        <motion.div initial="hidden" animate="show" style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", zIndex: 10, textAlign: "center", padding: "0 24px" }}>
+
+          {/* ── LIVE STATUS WIDGET ── */}
+          <motion.div variants={fadeUp(0.1, 1.2)} className="status-widget">
+            <div className="status-badge">
+              <span className="status-dot" />
+              {isOpen ? "WE ARE OPEN" : "CLOSED"}
+            </div>
+            <div className="status-time" style={{ fontSize: '14px', color: '#fff', fontWeight: 500 }}>
+              {timeStr} WIB
+            </div>
+            <div className="status-time" style={{ fontSize: '11px', opacity: 0.6, letterSpacing: '0.2em' }}>
+              Op en Daily · 12PM – 2AM
+            </div>
+            <div className="status-v-bar" />
+          </motion.div>
+
+          {/* Location */}
+          <motion.div variants={fadeUp(0.2, 1.2)} className="hero-location-lux" style={{ marginBottom: '20px' }}>
+            Kelapa Gading, Jakarta
+          </motion.div>
+
+          {/* ── Logo Section — className="logo-row" added for mobile ── */}
+          <div className="logo-row" style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100%" }}>
+            <motion.div variants={fadeUp(0.7, 1.5)} className="logo-text-left" style={{ rotate: -5 }}>Ibza's</motion.div>
+            <motion.div variants={fadeUp(0.75, 1.8)} style={{ width: 235 }}><HeroLogo /></motion.div>
+            <motion.div variants={fadeUp(0.8, 1.5)} className="logo-text-right">
+              <span className="flicker-text" style={{ fontSize: "4rem", fontWeight: "500" }}>BAR</span>
+              <span style={{ fontSize: "5.6rem", fontWeight: "400" }}>LOUNGE</span>
+            </motion.div>
+          </div>
+
+          <div style={{ height: "16px" }} />
+
+          <motion.div
+            variants={fadeUp(1.3, 1.2)}
+            className="hero-descriptor-lux"
+            style={{ marginTop: '16px' }}
+          >
+            Bar &nbsp;·&nbsp; Lounge &nbsp;·&nbsp; Rooftop Cocktails &nbsp;·&nbsp; Live Music
+          </motion.div>
+
+          {/* ── CTA Buttons — className="hero-cta-row" added for mobile ── */}
+          <motion.div variants={fadeUp(1.6, 1.2)} className="hero-cta-row" style={{ display: "flex", gap: 14, marginTop: 28 }}>
+            <button className="lux-btn-solid" onClick={() => navigate("events")}>Upcoming Events</button>
+            <button className="lux-btn-tropical" onClick={() => navigate("shop")}>
+              <span>Wine &amp; Liquor Shop</span>
+            </button>
+          </motion.div>
+        </motion.div>
+
+        <motion.div className="hero-scroll" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.6, duration: 1.4 }} style={{ zIndex: 10, position: "absolute", bottom: 40, left: "50%", transform: "translateX(-50%)", fontFamily: "'Montserrat', sans-serif", fontWeight: 300, fontSize: 8.5, letterSpacing: "0.38em", animation: "scrollGlow 2.5s ease-in-out infinite" }}>
+          <div className="hero-scroll-line" />
+          Scroll
+        </motion.div>
       </div>
-      <div className="status-time" style={{ fontSize: '14px', color: '#fff', fontWeight: 500 }}>
-        {timeStr} WIB
-      </div>
-      <div className="status-time" style={{ fontSize: '11px', opacity: 0.6, letterSpacing: '0.2em' }}>
-        Open Daily · 12PM – 2AM
-      </div>
-      <div className="status-v-bar" />
-    </motion.div>
-
-    {/* Location - NO UNDERLINE BELOW THIS */}
-    <motion.div variants={fadeUp(0.2, 1.2)} className="hero-location-lux" style={{ marginBottom: '20px' }}>
-      Kelapa Gading, Jakarta
-    </motion.div>
-    
-    {/* Logo Section */}
-    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100%" }}>
-      <motion.div variants={fadeUp(0.7, 1.5)} className="logo-text-left" style={{ rotate: -5 }}>Ibza's</motion.div>
-      <motion.div variants={fadeUp(0.75, 1.8)} style={{ width: 235 }}><HeroLogo /></motion.div>
-      <motion.div variants={fadeUp(0.8, 1.5)} className="logo-text-right">
-        <span className="flicker-text" style={{ fontSize: "4rem", fontWeight: "500" }}>BAR</span>
-        <span style={{ fontSize: "5.6rem", fontWeight: "400" }}>LOUNGE</span>
-      </motion.div>
-    </div>
-
-   {/* The second hero-rule (The one ABOVE the descriptor) remains for balance */}
-<div style={{ height: "16px" }} />
-
-<motion.div 
-  variants={fadeUp(1.3, 1.2)} 
-  className="hero-descriptor-lux" 
-  style={{ marginTop: '16px' }}
->
-  Bar &nbsp;·&nbsp; Lounge &nbsp;·&nbsp; Rooftop Cocktails &nbsp;·&nbsp; Live Music
-</motion.div>
-
-<motion.div variants={fadeUp(1.6, 1.2)} style={{ display: "flex", gap: 14, marginTop: 28 }}>
-  <button className="lux-btn-solid" onClick={() => navigate("events")}>Upcoming Events</button>
-  <button className="lux-btn-tropical" onClick={() => navigate("shop")}>
-    <span>Wine &amp; Liquor Shop</span>
-  </button>
-</motion.div>
-</motion.div>
-
-<motion.div className="hero-scroll" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.6, duration: 1.4 }} style={{ zIndex: 10, position: "absolute", bottom: 40, left: "50%", transform: "translateX(-50%)", fontFamily: "'Montserrat', sans-serif", fontWeight: 300, fontSize: 8.5, letterSpacing: "0.38em", animation: "scrollGlow 2.5s ease-in-out infinite" }}>
-  <div className="hero-scroll-line" />
-  Scroll
-</motion.div>
-</div>
 
       {/* ── Stats strip ── */}
       <div className="about-strip">
@@ -451,204 +498,174 @@ body .btn-text-only:active {
       </div>
 
       {/* ── Frostbite Hover Style ── */}
-<style>{`
-  .ice-card {
-    transition: 
-      backdrop-filter 0.6s ease, 
-      background 0.6s ease, 
-      border-color 0.6s ease,
-      box-shadow 0.6s ease !important;
-  }
-  
-  .ice-card:hover {
-    /* Deepens the "frozen" look on hover */
-    background: rgba(255, 255, 255, 0.25) !important; 
-    backdrop-filter: blur(60px) saturate(130%) !important;
-    WebkitBackdropFilter: blur(60px) saturate(130%) !important;
-    border-color: rgba(255, 255, 255, 0.6) !important;
-    box-shadow: 
-      0 12px 40px 0 rgba(0, 0, 0, 0.35),
-      inset 0 0 20px 5px rgba(255, 255, 255, 0.3) !important;
-  }
-`}</style>
+      <style>{`
+        .ice-card {
+          transition:
+            backdrop-filter 0.6s ease,
+            background 0.6s ease,
+            border-color 0.6s ease,
+            box-shadow 0.6s ease !important;
+        }
+        .ice-card:hover {
+          background: rgba(255, 255, 255, 0.25) !important;
+          backdrop-filter: blur(60px) saturate(130%) !important;
+          WebkitBackdropFilter: blur(60px) saturate(130%) !important;
+          border-color: rgba(255, 255, 255, 0.6) !important;
+          box-shadow:
+            0 12px 40px 0 rgba(0, 0, 0, 0.35),
+            inset 0 0 20px 5px rgba(255, 255, 255, 0.3) !important;
+        }
+      `}</style>
 
-{/* ── About Section ── */}
-<section style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, alignItems: "center" }}>
-  <div>
-    <div className="section-eyebrow">About Us</div>
-    <h2 className="section-title">More Than a Bar.<br /><em style={{ fontStyle: "italic", color: "var(--gold)" }}>An Experience.</em></h2>
-    <div className="divider" />
-    
-    <p style={{ fontSize: 17, color: "var(--muted)", lineHeight: 1.7, marginBottom: 20 }}>
-      Ibza's Bar and Lounge is Kelapa Gading's most vibrant destination — a two-floor escape where great food, world-class drinks, and electric live music come together.
-    </p>
-    <p style={{ fontSize: 17, color: "var(--muted)", lineHeight: 1.7, marginBottom: 32 }}>
-      From quiet conversations on the ground floor to rooftop cocktails under the Jakarta sky, every corner of Ibza's is designed to make you feel alive.
-    </p>
-
-    <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-      {[["📍","Jl. Boulevard Raya No.5-6 Blok FX1, Kelapa Gading"],["🕒","Open Daily · 12:00 PM – 2:00 AM"],["📞","+62 213 887 9271"]].map(([icon, text]) => (
-        <div key={text} style={{ display: "flex", gap: 12, fontSize: 16, color: "var(--muted)", alignItems: "flex-start" }}>
-          <span>{icon}</span>
-          <span>{text}</span>
-        </div>
-      ))}
-    </div>
-  </div>
-
-  {/* ── Frostbite Ice Scorecards ── */}
-  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 15 }}>
-    {[{label:"Services",score:8.5},{label:"Ambiance",score:8},{label:"Prices",score:8},{label:"Drinks",score:7.5},{label:"Safety",score:7.5},{label:"Music",score:7}].map(({ label, score }) => (
-      <div 
-        key={label} 
-        className="ice-card"
-        style={{ 
-          background: "rgba(255, 255, 255, 0.12)", 
-          backdropFilter: "blur(30px) saturate(160%)",
-          WebkitBackdropFilter: "blur(30px) saturate(160%)",
-          border: "1px solid rgba(255, 255, 255, 0.3)",
-          borderRadius: "12px",
-          padding: "28px 24px",
-          cursor: "pointer",
-          boxShadow: `
-            0 8px 32px 0 rgba(0, 0, 0, 0.3),
-            inset 0 0 12px 2px rgba(255, 255, 255, 0.15)
-          `,
-          position: "relative",
-          overflow: "hidden"
-        }}
-      >
-        <div style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          height: "1px",
-          background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent)"
-        }} />
-
-        <div style={{ fontSize: 10, letterSpacing: 3, textTransform: "uppercase", color: "rgba(255, 255, 255, 0.7)", marginBottom: 10, fontWeight: 600 }}>{label}</div>
-        <div style={{ fontFamily: "var(--font-serif)", fontSize: 36, color: "var(--gold)", lineHeight: 1, textShadow: "0 2px 10px rgba(0,0,0,0.3)" }}>{score}</div>
-        
-        <div style={{ marginTop: 12, height: 3, background: "rgba(255, 255, 255, 0.1)", borderRadius: 2 }}>
-          <div style={{ width: `${score * 10}%`, height: "100%", background: "var(--gold)", borderRadius: 2, boxShadow: "0 0 10px var(--gold)" }} />
-        </div>
-      </div>
-    ))}
-  </div>
-</section>
-
-      {/* ── Enhanced Ice & Glowing Typography Style ── */}
-<style>{`
-  .event-ice-card {
-    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .event-ice-card:hover {
-    background: rgba(255, 255, 255, 0.22) !important;
-    backdrop-filter: blur(45px) saturate(140%) !important;
-    border-color: rgba(255, 255, 255, 0.6) !important;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), inset 0 0 25px 5px rgba(255, 255, 255, 0.3) !important;
-  }
-
-  /* ── Bright Glow for Tags ── */
-  .glow-tag {
-    font-size: 11px;
-    letter-spacing: 2px;
-    font-weight: 800;
-    text-transform: uppercase;
-    color: #fff;
-    background: rgba(201, 160, 60, 0.3); /* Gold tint */
-    border: 1px solid var(--gold);
-    padding: 6px 14px;
-    border-radius: 4px;
-    /* The Magic Glow */
-    text-shadow: 0 0 8px rgba(255, 255, 255, 0.8), 0 0 15px var(--gold);
-    box-shadow: 0 0 15px rgba(201, 160, 60, 0.4), inset 0 0 8px rgba(201, 160, 60, 0.2);
-    display: inline-block;
-  }
-
-  .title-decoration {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    margin-top: 16px;
-    margin-bottom: 24px;
-  }
-  .line-1 { width: 80px; height: 2px; background: var(--gold); }
-  .line-2 { width: 50px; height: 1.5px; background: rgba(201, 160, 60, 0.5); }
-  .line-3 { width: 30px; height: 1px; background: rgba(201, 160, 60, 0.3); }
-`}</style>
-
-{/* ── Events Section ── */}
-{upcoming.length > 0 && (
-  <section style={{ padding: "100px 40px", background: "transparent" }}>
-    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 60 }}>
-      <div style={{ maxWidth: "600px" }}>
-        <div className="section-eyebrow" style={{ fontSize: 14, letterSpacing: '4px', marginBottom: 12 }}>WHAT'S ON</div>
-        <h2 className="section-title" style={{ fontSize: 52, marginBottom: 0 }}>
-          Upcoming <em style={{ fontStyle: "italic", color: "var(--gold)" }}>Events</em>
-        </h2>
-        
-        {/* 3 Line Literation */}
-        <div className="title-decoration">
-          <div className="line-1"></div>
-          <div className="line-2"></div>
-          <div className="line-3"></div>
-        </div>
-
-        {/* Added Paragraph Sentence */}
-        <p style={{ fontSize: 18, color: "rgba(255,255,255,0.6)", lineHeight: 1.6, marginTop: 10 }}>
-          Experience the pulse of Kelapa Gading through our curated lineup of world-class DJs and mesmerizing live performances.
-        </p>
-      </div>
-
-      <button className="btn-text-only" onClick={() => navigate('events')} style={{ paddingBottom: 20 }}>
-        <div className="arrows-lead"><i></i><i></i><i></i></div>
-        <span style={{ fontSize: 13, letterSpacing: 2 }}>VIEW ALL EVENTS</span>
-      </button>
-    </div>
-
-    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 30 }}>
-      {upcoming.map((ev) => (
-        <div 
-          key={ev.id} 
-          className="event-ice-card"
-          style={{ 
-            background: "rgba(255, 255, 255, 0.08)", 
-            backdropFilter: "blur(25px)",
-            WebkitBackdropFilter: "blur(25px)",
-            border: "1px solid rgba(255, 255, 255, 0.2)",
-            borderRadius: "24px",
-            cursor: "pointer"
-          }} 
-          onClick={() => navigate("events")}
-        >
-          <div style={{ overflow: 'hidden', height: 280 }}>
-            <img src={ev.image} alt={ev.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-          </div>
-          
-          <div style={{ padding: "40px" }}>
-            {/* Bright Glowing Tag */}
-            <div className="glow-tag">
-              {ev.tag}
-            </div>
-            
-            <div style={{ fontFamily: "var(--font-serif)", fontSize: 34, color: "#fff", margin: "20px 0 12px", fontWeight: 700 }}>
-              {ev.title}
-            </div>
-            
-            <div style={{ fontSize: 14, letterSpacing: 2, textTransform: "uppercase", color: "var(--gold)", fontWeight: 600, opacity: 0.9 }}>
-              {new Date(ev.date).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })} · {ev.time}
-            </div>
+      {/* ── About Section — className="about-section" added for mobile ── */}
+      <section className="about-section" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, alignItems: "center" }}>
+        <div>
+          <div className="section-eyebrow">About Us</div>
+          <h2 className="section-title">More Than a Bar.<br /><em style={{ fontStyle: "italic", color: "var(--gold)" }}>An Experience.</em></h2>
+          <div className="divider" />
+          <p style={{ fontSize: 17, color: "var(--muted)", lineHeight: 1.7, marginBottom: 20 }}>
+            Ibza's Bar and Lounge is Kelapa Gading's most vibrant destination — a two-floor escape where great food, world-class drinks, and electric live music come together.
+          </p>
+          <p style={{ fontSize: 17, color: "var(--muted)", lineHeight: 1.7, marginBottom: 32 }}>
+            From quiet conversations on the ground floor to rooftop cocktails under the Jakarta sky, every corner of Ibza's is designed to make you feel alive.
+          </p>
+          <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+            {[["📍","Jl. Boulevard Raya No.5-6 Blok FX1, Kelapa Gading"],["🕒","Open Daily · 12:00 PM – 2:00 AM"],["📞","+62 213 887 9271"]].map(([icon, text]) => (
+              <div key={text} style={{ display: "flex", gap: 12, fontSize: 16, color: "var(--muted)", alignItems: "flex-start" }}>
+                <span>{icon}</span>
+                <span>{text}</span>
+              </div>
+            ))}
           </div>
         </div>
-      ))}
-    </div>
-  </section>
-)}
+
+        {/* ── Score Cards — className="score-grid" added for mobile ── */}
+        <div className="score-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 15 }}>
+          {[{label:"Services",score:8.5},{label:"Ambiance",score:8},{label:"Prices",score:8},{label:"Drinks",score:7.5},{label:"Safety",score:7.5},{label:"Music",score:7}].map(({ label, score }) => (
+            <div
+              key={label}
+              className="ice-card"
+              style={{
+                background: "rgba(255, 255, 255, 0.12)",
+                backdropFilter: "blur(30px) saturate(160%)",
+                WebkitBackdropFilter: "blur(30px) saturate(160%)",
+                border: "1px solid rgba(255, 255, 255, 0.3)",
+                borderRadius: "12px",
+                padding: "28px 24px",
+                cursor: "pointer",
+                boxShadow: `0 8px 32px 0 rgba(0, 0, 0, 0.3), inset 0 0 12px 2px rgba(255, 255, 255, 0.15)`,
+                position: "relative",
+                overflow: "hidden"
+              }}
+            >
+              <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "1px", background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent)" }} />
+              <div style={{ fontSize: 10, letterSpacing: 3, textTransform: "uppercase", color: "rgba(255, 255, 255, 0.7)", marginBottom: 10, fontWeight: 600 }}>{label}</div>
+              <div style={{ fontFamily: "var(--font-serif)", fontSize: 36, color: "var(--gold)", lineHeight: 1, textShadow: "0 2px 10px rgba(0,0,0,0.3)" }}>{score}</div>
+              <div style={{ marginTop: 12, height: 3, background: "rgba(255, 255, 255, 0.1)", borderRadius: 2 }}>
+                <div style={{ width: `${score * 10}%`, height: "100%", background: "var(--gold)", borderRadius: 2, boxShadow: "0 0 10px var(--gold)" }} />
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── Event Card & Typography Styles ── */}
+      <style>{`
+        .event-ice-card {
+          transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+          position: relative;
+          overflow: hidden;
+        }
+        .event-ice-card:hover {
+          background: rgba(255, 255, 255, 0.22) !important;
+          backdrop-filter: blur(45px) saturate(140%) !important;
+          border-color: rgba(255, 255, 255, 0.6) !important;
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), inset 0 0 25px 5px rgba(255, 255, 255, 0.3) !important;
+        }
+        .glow-tag {
+          font-size: 11px;
+          letter-spacing: 2px;
+          font-weight: 800;
+          text-transform: uppercase;
+          color: #fff;
+          background: rgba(201, 160, 60, 0.3);
+          border: 1px solid var(--gold);
+          padding: 6px 14px;
+          border-radius: 4px;
+          text-shadow: 0 0 8px rgba(255, 255, 255, 0.8), 0 0 15px var(--gold);
+          box-shadow: 0 0 15px rgba(201, 160, 60, 0.4), inset 0 0 8px rgba(201, 160, 60, 0.2);
+          display: inline-block;
+        }
+        .title-decoration {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+          margin-top: 16px;
+          margin-bottom: 24px;
+        }
+        .line-1 { width: 80px; height: 2px; background: var(--gold); }
+        .line-2 { width: 50px; height: 1.5px; background: rgba(201, 160, 60, 0.5); }
+        .line-3 { width: 30px; height: 1px; background: rgba(201, 160, 60, 0.3); }
+      `}</style>
+
+      {/* ── Events Section ── */}
+      {upcoming.length > 0 && (
+        <section style={{ padding: "100px 40px", background: "transparent" }}>
+          {/* ── Events header — className="events-header" added for mobile ── */}
+          <div className="events-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 60 }}>
+            <div style={{ maxWidth: "600px" }}>
+              <div className="section-eyebrow" style={{ fontSize: 14, letterSpacing: '4px', marginBottom: 12 }}>WHAT'S ON</div>
+              <h2 className="section-title" style={{ fontSize: 52, marginBottom: 0 }}>
+                Upcoming <em style={{ fontStyle: "italic", color: "var(--gold)" }}>Events</em>
+              </h2>
+              <div className="title-decoration">
+                <div className="line-1"></div>
+                <div className="line-2"></div>
+                <div className="line-3"></div>
+              </div>
+              <p style={{ fontSize: 18, color: "rgba(255,255,255,0.6)", lineHeight: 1.6, marginTop: 10 }}>
+                Experience the pulse of Kelapa Gading through our curated lineup of world-class DJs and mesmerizing live performances.
+              </p>
+            </div>
+            <button className="btn-text-only" onClick={() => navigate('events')} style={{ paddingBottom: 20 }}>
+              <div className="arrows-lead"><i></i><i></i><i></i></div>
+              <span style={{ fontSize: 13, letterSpacing: 2 }}>VIEW ALL EVENTS</span>
+            </button>
+          </div>
+
+          {/* ── Events grid — className="events-grid" added for mobile ── */}
+          <div className="events-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 30 }}>
+            {upcoming.map((ev) => (
+              <div
+                key={ev.id}
+                className="event-ice-card"
+                style={{
+                  background: "rgba(255, 255, 255, 0.08)",
+                  backdropFilter: "blur(25px)",
+                  WebkitBackdropFilter: "blur(25px)",
+                  border: "1px solid rgba(255, 255, 255, 0.2)",
+                  borderRadius: "24px",
+                  cursor: "pointer"
+                }}
+                onClick={() => navigate("events")}
+              >
+                <div style={{ overflow: 'hidden', height: 280 }}>
+                  <img src={ev.image} alt={ev.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                </div>
+                <div style={{ padding: "40px" }}>
+                  <div className="glow-tag">{ev.tag}</div>
+                  <div style={{ fontFamily: "var(--font-serif)", fontSize: 34, color: "#fff", margin: "20px 0 12px", fontWeight: 700 }}>
+                    {ev.title}
+                  </div>
+                  <div style={{ fontSize: 14, letterSpacing: 2, textTransform: "uppercase", color: "var(--gold)", fontWeight: 600, opacity: 0.9 }}>
+                    {new Date(ev.date).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })} · {ev.time}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* ── Shop CTA ── */}
       <section style={{ textAlign: "center", padding: "120px 48px" }}>
