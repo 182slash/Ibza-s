@@ -67,8 +67,12 @@ export default function HomePage({ events, navigate }) {
             /* 4. Fix overlap on Wine & Liquor Shop button */
 .wine-liquor-button-container-class { 
     position: relative; 
-    z-index: 60; /* Higher than your mobile-logo-wrapper z-index */
-    background-color: #fff; /* Optional: adds a solid backdrop to 'cut' the line */
+    z-index: 99; 
+    /* Match the dark background to 'hide' the line behind the text */
+    background-color: #050505; 
+    /* Ensure the background covers the full width of the text/lines */
+    display: inline-block;
+    padding: 0 15px;
     margin-top: 20px !important; 
 }
 
@@ -441,7 +445,7 @@ export default function HomePage({ events, navigate }) {
           width: 1px;
           height: 50px;
           background: linear-gradient(to bottom, #c9a84c 0%, transparent 100%);
-          margin-top: 10px;
+          margin-top: 100px 
           margin-bottom: 5px;
         }
       `}</style>
