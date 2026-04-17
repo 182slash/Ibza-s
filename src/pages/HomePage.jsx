@@ -63,6 +63,20 @@ export default function HomePage({ events, navigate }) {
             margin-top: 15px !important; 
             margin-bottom: -5px !important; 
             z-index: 50;
+
+            /* 4. Fix overlap on Wine & Liquor Shop button */
+.wine-liquor-button-container-class { 
+    position: relative; 
+    z-index: 60; /* Higher than your mobile-logo-wrapper z-index */
+    background-color: #fff; /* Optional: adds a solid backdrop to 'cut' the line */
+    margin-top: 20px !important; 
+}
+
+/* 5. Force the scroll animation line to stop before the button */
+.scroll-animation-line-class {
+    max-height: 80vh; /* Limits the line length on shorter mobile screens */
+    margin-bottom: 20px;
+}
           }
 
           .logo-text-left {
