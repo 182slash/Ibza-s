@@ -13,23 +13,31 @@ export default function HeroLogo() {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  // ── MOBILE: in-flow, centered, compact ──
+  // ── MOBILE: Stays in flow (No floating bug) but moves freely ──
   if (isMobile) {
     return (
       <div style={{
-        position: "relative",       // ← back in normal flow (not absolute)
-        width: 130,
-        height: 140,
-        margin: "0 auto",           // center in column
-        zIndex: 50,
+        position: "relative",      // 1. Keep it relative to stay in the Logo Row
+        width: 62,
+        height: 66,
+        margin: "0 auto",          // 2. Keep it centered
+        zIndex: 100,               // 3. Bring it to the very front
         pointerEvents: "none",
+
+        /* ── THE JOYSTICK (FREE MOVEMENT) ── */
+        /* Change translate(X, Y) 
+           X: Positive = Right, Negative = Left
+           Y: Positive = Down, Negative = Up 
+        */
+        transform: "translate(0px, 0px)", 
       }}>
+        
         {/* Palm Back */}
         <motion.div
           style={{
             position: "absolute",
-            bottom: "0%",
-            left: "38%",
+            bottom: "0%",          // Fine-tune individual height
+            left: "38%",           // Fine-tune individual horizontal
             width: "52%",
             height: "75%",
             zIndex: 1,
@@ -75,7 +83,7 @@ export default function HeroLogo() {
     );
   }
 
-  // ── DESKTOP: unchanged ──
+  // ── DESKTOP: Unchanged ──
   return (
     <div style={{
       position: "relative",

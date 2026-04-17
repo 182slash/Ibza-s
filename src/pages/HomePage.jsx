@@ -48,17 +48,31 @@ export default function HomePage({ events, navigate }) {
 
         /* ── MOBILE FIXES ── */
         @media (max-width: 768px) {
+          
+          /* 1. Hide the vertical bar on mobile */
+          .status-v-bar { display: none !important; }
+          
+          /* 2. Hide the desktop palm tree in the logo row */
+          .desktop-logo-wrapper { display: none !important; }
+          
+          /* 3. Show the mobile palm tree above the location */
+          .mobile-logo-wrapper { 
+            display: flex !important; 
+            justify-content: center;
+            align-items: center;
+            margin-top: 15px !important; 
+            margin-bottom: -5px !important; 
+            z-index: 50;
+          }
 
           .logo-text-left {
             font-size: 7.5rem !important; 
             text-align: center;
             display: block !important;
             
-            /* ── FREE MOVEMENT SETTINGS ── */
             position: relative !important;
-            z-index: 999 !important; /* Brings text forward */
+            z-index: 999 !important; 
             
-            /* UPDATED: -20% horizontal (left), 10% vertical (down) */
             transform: translate(-77%, 22%) !important;
             
             margin-top: 0 !important;
@@ -129,6 +143,13 @@ export default function HomePage({ events, navigate }) {
         }
 
         /* ── DESKTOP & GLOBAL STYLES ── */
+        
+        /* Hide mobile logo by default on Desktop */
+        .mobile-logo-wrapper { display: none; }
+        
+        /* Keep desktop logo width */
+        .desktop-logo-wrapper { display: block; width: 235px; }
+
         .logo-text-left {
           font-family: 'Great Vibes', cursive;
           font-size: 10rem;
@@ -442,9 +463,16 @@ export default function HomePage({ events, navigate }) {
               {timeStr} WIB
             </div>
             <div className="status-time" style={{ fontSize: '11px', opacity: 0.6, letterSpacing: '0.2em' }}>
-              Op en Daily · 12PM – 2AM
+              Open Daily · 12PM – 2AM
             </div>
+            
             <div className="status-v-bar" />
+
+            {/* ── MOBILE PALM TREE WRAPPER ── */}
+            <div className="mobile-logo-wrapper">
+              <HeroLogo />
+            </div>
+
           </motion.div>
 
           {/* Location */}
@@ -452,10 +480,15 @@ export default function HomePage({ events, navigate }) {
             Kelapa Gading, Jakarta
           </motion.div>
 
-          {/* ── Logo Section — className="logo-row" added for mobile ── */}
+          {/* ── Logo Section ── */}
           <div className="logo-row" style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100%" }}>
             <motion.div variants={fadeUp(0.7, 1.5)} className="logo-text-left" style={{ rotate: -5 }}>Ibza's</motion.div>
-            <motion.div variants={fadeUp(0.75, 1.8)} style={{ width: 235 }}><HeroLogo /></motion.div>
+            
+            {/* ── DESKTOP PALM TREE WRAPPER ── */}
+            <motion.div variants={fadeUp(0.75, 1.8)} className="desktop-logo-wrapper">
+              <HeroLogo />
+            </motion.div>
+
             <motion.div variants={fadeUp(0.8, 1.5)} className="logo-text-right">
               <span className="flicker-text" style={{ fontSize: "4rem", fontWeight: "500" }}>BAR</span>
               <span style={{ fontSize: "5.6rem", fontWeight: "400" }}>LOUNGE</span>
@@ -472,7 +505,7 @@ export default function HomePage({ events, navigate }) {
             Bar &nbsp;·&nbsp; Lounge &nbsp;·&nbsp; Rooftop Cocktails &nbsp;·&nbsp; Live Music
           </motion.div>
 
-          {/* ── CTA Buttons — className="hero-cta-row" added for mobile ── */}
+          {/* ── CTA Buttons ── */}
           <motion.div variants={fadeUp(1.6, 1.2)} className="hero-cta-row" style={{ display: "flex", gap: 14, marginTop: 28 }}>
             <button className="lux-btn-solid" onClick={() => navigate("events")}>Upcoming Events</button>
             <button className="lux-btn-tropical" onClick={() => navigate("shop")}>
@@ -517,7 +550,7 @@ export default function HomePage({ events, navigate }) {
         }
       `}</style>
 
-      {/* ── About Section — className="about-section" added for mobile ── */}
+      {/* ── About Section ── */}
       <section className="about-section" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, alignItems: "center" }}>
         <div>
           <div className="section-eyebrow">About Us</div>
@@ -539,7 +572,7 @@ export default function HomePage({ events, navigate }) {
           </div>
         </div>
 
-        {/* ── Score Cards — className="score-grid" added for mobile ── */}
+        {/* ── Score Cards ── */}
         <div className="score-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 15 }}>
           {[{label:"Services",score:8.5},{label:"Ambiance",score:8},{label:"Prices",score:8},{label:"Drinks",score:7.5},{label:"Safety",score:7.5},{label:"Music",score:7}].map(({ label, score }) => (
             <div
@@ -611,7 +644,6 @@ export default function HomePage({ events, navigate }) {
       {/* ── Events Section ── */}
       {upcoming.length > 0 && (
         <section style={{ padding: "100px 40px", background: "transparent" }}>
-          {/* ── Events header — className="events-header" added for mobile ── */}
           <div className="events-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 60 }}>
             <div style={{ maxWidth: "600px" }}>
               <div className="section-eyebrow" style={{ fontSize: 14, letterSpacing: '4px', marginBottom: 12 }}>WHAT'S ON</div>
@@ -633,7 +665,6 @@ export default function HomePage({ events, navigate }) {
             </button>
           </div>
 
-          {/* ── Events grid — className="events-grid" added for mobile ── */}
           <div className="events-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 30 }}>
             {upcoming.map((ev) => (
               <div
