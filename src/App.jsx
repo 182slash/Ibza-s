@@ -56,6 +56,18 @@ export default function App() {
   // ── Render ────────────────────────────────────────────────────────────────
   return (
     <div className="grain">
+      {/* ── FIX: Pushes content below the fixed Navbar ── */}
+      <style>{`
+        .main-content-wrapper {
+          padding-top: 100px; /* Matches Desktop Nav height */
+        }
+        @media (max-width: 768px) {
+          .main-content-wrapper {
+            padding-top: 85px; /* Matches Mobile Nav height */
+          }
+        }
+      `}</style>
+
       {/* Global nav */}
       <Nav
         page={page}
@@ -65,47 +77,49 @@ export default function App() {
         onCartClose={() => setCartOpen(false)}
       />
 
-      {/* Pages */}
-      {page === "home" && (
-        <HomePage events={events} navigate={navigate} />
-      )}
+      {/* ── Pages wrapped in offset container ── */}
+      <div className="main-content-wrapper">
+        {page === "home" && (
+          <HomePage events={events} navigate={navigate} />
+        )}
 
-      {page === "shop" && (
-        <ShopPage
-          products={filteredProducts}
-          categories={categories}
-          filter={filter}
-          setFilter={setFilter}
-          addToCart={handleAddToCart}
-        />
-      )}
-
-      {page === "events" && (
-        <EventsPage events={events} />
-      )}
-
-      {page === "admin" && (
-        admin.adminAuth ? (
-          <AdminPage
-            products={products}
-            events={events}
-            adminTab={admin.adminTab}
-            setAdminTab={admin.setAdminTab}
-            openProductModal={admin.openProductModal}
-            openEventModal={admin.openEventModal}
-            deleteProduct={admin.deleteProduct}
-            deleteEvent={admin.deleteEvent}
-            setAdminAuth={admin.setAdminAuth}
+        {page === "shop" && (
+          <ShopPage
+            products={filteredProducts}
+            categories={categories}
+            filter={filter}
+            setFilter={setFilter}
+            addToCart={handleAddToCart}
           />
-        ) : (
-          <LoginPage
-            loginPass={admin.loginPass}
-            setLoginPass={admin.setLoginPass}
-            handleLogin={admin.handleLogin}
-            loginErr={admin.loginErr}
-          />
-        )
-      )}
+        )}
+
+        {page === "events" && (
+          <EventsPage events={events} />
+        )}
+
+        {page === "admin" && (
+          admin.adminAuth ? (
+            <AdminPage
+              products={products}
+              events={events}
+              adminTab={admin.adminTab}
+              setAdminTab={admin.setAdminTab}
+              openProductModal={admin.openProductModal}
+              openEventModal={admin.openEventModal}
+              deleteProduct={admin.deleteProduct}
+              deleteEvent={admin.deleteEvent}
+              setAdminAuth={admin.setAdminAuth}
+            />
+          ) : (
+            <LoginPage
+              loginPass={admin.loginPass}
+              setLoginPass={admin.setLoginPass}
+              handleLogin={admin.handleLogin}
+              loginErr={admin.loginErr}
+            />
+          )
+        )}
+      </div>
 
       {/* Footer — hidden on admin page */}
       {page !== "admin" && <Footer navigate={navigate} />}
