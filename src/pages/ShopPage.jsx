@@ -9,64 +9,7 @@ export default function ShopPage({
 }) {
   return (
     <div style={{ paddingTop: 72 }}>
-      {/* Mobile-only overrides */}
-      <style dangerouslySetInnerHTML={{ __html: `
-        @media (max-width: 768px) {
-          .mobile-compact-section {
-            padding: 40px 20px 40px !important;
-          }
-          .section-title {
-            font-size: 28px !important;
-            margin-bottom: 8px;
-          }
-          .filter-bar {
-            display: flex;
-            overflow-x: auto;
-            white-space: nowrap;
-            padding-bottom: 12px;
-            margin: 0 -20px 24px;
-            padding-left: 20px;
-            scrollbar-width: none;
-          }
-          .filter-bar::-webkit-scrollbar { display: none; }
-          
-          .shop-grid {
-            grid-template-columns: 1fr 1fr; /* Two columns for a compact look */
-            gap: 12px;
-          }
-          .product-card {
-            padding: 12px !important;
-          }
-          .product-name {
-            font-size: 14px !important;
-            line-height: 1.2;
-            height: 34px;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-          }
-          .product-desc {
-            display: none; /* Hide description on mobile for extreme compactness */
-          }
-          .product-price {
-            font-size: 13px !important;
-            margin: 8px 0 !important;
-          }
-          .product-actions {
-            flex-direction: column;
-            gap: 8px;
-          }
-          .mobile-footer-strip {
-            padding: 32px 20px !important;
-            text-align: center;
-            justify-content: center !important;
-          }
-        }
-      `}} />
-
       <section
-        className="mobile-compact-section"
         style={{
           borderBottom: "0.5px solid var(--border)",
           padding: "80px 48px 64px",
@@ -97,17 +40,17 @@ export default function ShopPage({
         {/* Product grid */}
         <div className="shop-grid">
           {products.map((product) => (
-            <div key={product.id} className="product-card" style={{ padding: "24px", border: "0.5px solid var(--border)" }}>
+            <div key={product.id} className="product-card">
 
               {/* ── Product image ── */}
               {product.image ? (
-                <div className="product-img-wrap" style={{ marginBottom: 16 }}>
+                <div className="product-img-wrap">
                   <img
                     src={product.image}
                     alt={product.name}
                     className="product-img"
-                    style={{ width: '100%', height: 'auto', borderRadius: '4px' }}
                   />
+                  {/* Badge sits over the image when image is present */}
                   {product.badge && (
                     <div className="product-badge product-badge--overlay">
                       {product.badge}
@@ -115,31 +58,28 @@ export default function ShopPage({
                   )}
                 </div>
               ) : (
+                /* Badge inline (no image) */
                 product.badge && (
-                  <div className="product-badge" style={{ marginBottom: 12 }}>{product.badge}</div>
+                  <div className="product-badge">{product.badge}</div>
                 )
               )}
 
-              <div className="product-category" style={{ fontSize: 10, textTransform: 'uppercase', color: 'var(--muted)' }}>
-                {product.category}
-              </div>
-              <div className="product-name" style={{ fontWeight: 600, margin: '4px 0' }}>{product.name}</div>
-              <div className="product-desc" style={{ fontSize: 12, color: 'var(--muted)', marginBottom: 12 }}>{product.desc}</div>
-              <div className="product-price" style={{ color: 'var(--gold)', fontWeight: 600, marginBottom: 16 }}>
-                {formatIDR(product.price)}
-              </div>
+              <div className="product-category">{product.category}</div>
+              <div className="product-name">{product.name}</div>
+              <div className="product-desc">{product.desc}</div>
+              <div className="product-price">{formatIDR(product.price)}</div>
 
-              <div className="product-actions" style={{ display: 'flex', gap: 8 }}>
+              <div className="product-actions">
                 <button
                   className="btn-primary"
-                  style={{ flex: 1, padding: "10px", fontSize: '13px' }}
+                  style={{ flex: 1, padding: "12px" }}
                   onClick={() => addToCart(product)}
                 >
-                  Add
+                  Add to Cart
                 </button>
                 <button
                   className="btn-ghost"
-                  style={{ padding: "10px 12px", fontSize: "16px" }}
+                  style={{ padding: "12px 16px", fontSize: "18px" }}
                   onClick={() =>
                     window.open(
                       `https://wa.me/6287789163072?text=Hi+Ibza%27s!+I%27d+like+to+order:+${encodeURIComponent(
@@ -172,7 +112,6 @@ export default function ShopPage({
 
       {/* WhatsApp contact strip */}
       <div
-        className="mobile-footer-strip"
         style={{
           background: "var(--surface)",
           borderTop: "0.5px solid var(--border)",
@@ -199,7 +138,7 @@ export default function ShopPage({
           <div
             style={{ fontFamily: "var(--font-serif)", fontSize: 20, color: "#fff" }}
           >
-            087 789 163 072
+            WhatsApp: 087 789 163 072
           </div>
         </div>
         <button
