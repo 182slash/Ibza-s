@@ -16,7 +16,7 @@ export const DEFAULT_PRODUCTS = [
     price: 1850000,
     desc: "Classic French champagne with fine bubbles and elegant finish.",
     badge: "Bestseller",
-    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
+    image: "https://www.enterwine.com/media/catalog/product/cache/8a8d282f16cd2e3b3bd66538b411c9c4/m/o/moet-chandon-brut-imperial.jpg",
   },
   {
     id: 2,
@@ -25,7 +25,7 @@ export const DEFAULT_PRODUCTS = [
     price: 980000,
     desc: "12-year aged Scotch whisky, rich and full-bodied.",
     badge: "",
-    image: "https://images.unsplash.com/photo-1527281400683-1aae777175f8?w=600&q=80",
+    image: "https://minuman.com/cdn/shop/products/JOHNNIE-WALKER-BLACK-ICON-200_800x.jpg?v=1663038108",
   },
   {
     id: 3,
@@ -34,7 +34,7 @@ export const DEFAULT_PRODUCTS = [
     price: 1200000,
     desc: "Smooth cognac aged 4–8 years, warm notes of oak and spice.",
     badge: "Popular",
-    image: "https://images.unsplash.com/photo-1569529465841-dfecdab7503b?w=600&q=80",
+    image: "https://www.enterwine.com/media/catalog/product/cache/8a8d282f16cd2e3b3bd66538b411c9c4/h/e/hennessy-vsop.jpg",
   },
   {
     id: 4,
@@ -43,7 +43,7 @@ export const DEFAULT_PRODUCTS = [
     price: 850000,
     desc: "Ultra-premium French vodka, pure and clean.",
     badge: "",
-    image: "https://images.unsplash.com/photo-1614313913007-2b4ae8ce32d6?w=600&q=80",
+    image: "https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//95/MTA-7474262/grey-goose_grey-goose_full01.jpg",
   },
   {
     id: 5,
@@ -52,7 +52,7 @@ export const DEFAULT_PRODUCTS = [
     price: 720000,
     desc: "Classic London dry gin with juniper and citrus notes.",
     badge: "",
-    image: "https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=600&q=80",
+    image: "https://down-id.img.susercontent.com/file/id-11134207-7qul5-lk0jguxokx9jbd",
   },
   {
     id: 6,
@@ -61,7 +61,7 @@ export const DEFAULT_PRODUCTS = [
     price: 620000,
     desc: "Light white rum, perfect for tropical cocktails.",
     badge: "New",
-    image: "https://images.unsplash.com/photo-1504675099198-7023dd85f5a3?w=600&q=80",
+    image: "https://www.wineonline.co.uk/media/catalog/product/cache/bc3a8a81709c245eaa2e25ff1e1e5d33/b/6/b63e70f7d998f99aca949872b539f232.jpg",
   },
 ];
 
