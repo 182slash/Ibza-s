@@ -168,8 +168,7 @@ export default function Footer({ navigate }) {
         <div>
           <img src={logoImg} alt="Ibzas" className="footer-logo-img" />
           <p className="footer-about">
-            "Two floors of atmosphere, one unforgettable night —<br />
-            Jakarta's finest bar and lounge in Kelapa Gading."
+            "Two floors of atmosphere, one unforgettable night"
           </p>
 
           <div className="social-container">
