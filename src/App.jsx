@@ -59,11 +59,11 @@ export default function App() {
       {/* ── FIX: Pushes content below the fixed Navbar ── */}
       <style>{`
         .main-content-wrapper {
-          padding-top: 100px; /* Matches Desktop Nav height */
+          padding-top: 0px; /* Matches Desktop Nav height */
         }
         @media (max-width: 768px) {
           .main-content-wrapper {
-            padding-top: 85px; /* Matches Mobile Nav height */
+            padding-top: 0px; /* Matches Mobile Nav height */
           }
         }
       `}</style>
