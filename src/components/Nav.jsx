@@ -23,7 +23,7 @@ export default function Nav({ page, navigate, cartCount, onCartOpen, onCartClose
     height: 100px;
     display: flex;
     align-items: center;
-    gap: 50px;
+    justify-content: space-between;   /* ← even distribution */
     z-index: 1000;
     padding: 0 60px;
     background: rgba(255, 255, 255, 0.08);
@@ -34,6 +34,7 @@ export default function Nav({ page, navigate, cartCount, onCartOpen, onCartClose
       0 4px 32px rgba(200, 230, 255, 0.08),
       0 1px 0 rgba(255, 255, 255, 0.12) inset,
       0 -1px 0 rgba(255, 255, 255, 0.06) inset;
+    overflow: visible;
   }
 
   .tropical-textured-nav::before {
@@ -75,6 +76,39 @@ export default function Nav({ page, navigate, cartCount, onCartOpen, onCartClose
   .tropical-textured-nav > *:not(style) {
     position: relative;
     z-index: 2;
+  }
+
+  /* ── Left & right link groups take equal flex space ── */
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+    flex: 1;
+  }
+  .nav-links.left  { justify-content: flex-end; }
+  .nav-links.right { justify-content: flex-start; }
+
+  /* ── Center logo: fixed width so it doesn't squash the link groups ── */
+  .nav-logo {
+    flex-shrink: 0;
+    width: 160px;               /* reserve a fixed slot for the logo */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    /* allow the image to visually overflow the nav height */
+    overflow: visible;
+  }
+
+  /* Logo image: taller than the bar for that "breaking out" effect,
+     but capped so it doesn't escape the viewport or push layout */
+  .nav-logo img {
+    height: 72px !important;   /* slightly overflows 100px nav — intentional */
+    width: auto;
+    display: block;
+    object-fit: contain;
+    /* subtle drop shadow so it reads against any background */
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.55));
   }
 
   .tropical-textured-nav .nav-link {
@@ -135,11 +169,12 @@ export default function Nav({ page, navigate, cartCount, onCartOpen, onCartClose
       justify-content: space-between;
       flex-wrap: nowrap;
     }
-      
+
     .nav-logo {
-      position: relative; 
-      top: -5px;   /* Move up or down */
-      left: -139px;   /* Move left or right */
+      width: auto;
+      position: relative;
+      top: -5px;
+      left: -139px;
     }
 
     .nav-links.left,
@@ -210,7 +245,7 @@ export default function Nav({ page, navigate, cartCount, onCartOpen, onCartClose
 
       {/* ── CENTER LOGO ── */}
       <div className="nav-logo" onClick={() => handleNav("home")}>
-        <img src={ibzasLogo} alt="Ibza's Logo" style={{ height: '125px', display: 'block' }} />
+        <img src={ibzasLogo} alt="Ibza's Logo" />
       </div>
 
       {/* ── MOBILE SLIDE-DOWN BAR ── */}

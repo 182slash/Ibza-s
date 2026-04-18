@@ -63,7 +63,7 @@ export default function App() {
         }
         @media (max-width: 768px) {
           .main-content-wrapper {
-            padding-top: 20px; /* Matches Mobile Nav height */
+            padding-top: 25px; /* Matches Mobile Nav height */
           }
         }
       `}</style>

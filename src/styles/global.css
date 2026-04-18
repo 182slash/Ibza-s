@@ -291,7 +291,7 @@ nav {
 
 .hero-scroll {
   position: absolute;
-  bottom: 36px;
+  bottom: 16px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 2;
@@ -308,7 +308,7 @@ nav {
 
 .hero-scroll-line {
   width: 0.5px;
-  height: 40px;
+  height: 20px;
   background: var(--gold);
   opacity: 0.5;
 }
