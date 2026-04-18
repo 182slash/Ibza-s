@@ -2,6 +2,38 @@ import { motion } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import HeroLogo from "../components/HeroLogo";
 
+const Counter = ({ value, duration = 2.5 }) => {
+  const [count, setCount] = useState(0);
+  const isK = value.toString().includes('K');
+  const target = parseFloat(value.toString().replace(/[^0-9.]/g, ''));
+  const suffix = value.toString().replace(/[0-9.]/g, '');
+
+  useEffect(() => {
+    let start = 0;
+    const end = target;
+    const totalFrames = duration * 60;
+    const increment = end / totalFrames;
+
+    const timer = setInterval(() => {
+      start += increment;
+      if (start >= end) {
+        setCount(end);
+        clearInterval(timer);
+      } else {
+        setCount(start);
+      }
+    }, 1000 / 60);
+
+    return () => clearInterval(timer);
+  }, [target, duration]);
+
+  const displayValue = Number.isInteger(target) && !value.toString().includes('.') 
+    ? Math.floor(count) 
+    : count.toFixed(1);
+    
+  return <span>{displayValue}{suffix}</span>;
+};
+
 const ease = [0.22, 1, 0.36, 1];
 
 function fadeUp(delay = 0, duration = 1.4) {
@@ -382,14 +414,70 @@ export default function HomePage({ events, navigate }) {
         {/* ── Score Cards ── */}
         <div className="score-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 15 }}>
           {[{label:"Services",score:8.5},{label:"Ambiance",score:8},{label:"Prices",score:8},{label:"Drinks",score:7.5},{label:"Safety",score:7.5},{label:"Music",score:7}].map(({ label, score }) => (
-            <div key={label} className="ice-card" style={{ background: "rgba(255,255,255,0.12)", backdropFilter: "blur(30px) saturate(160%)", WebkitBackdropFilter: "blur(30px) saturate(160%)", border: "1px solid rgba(255,255,255,0.3)", borderRadius: "12px", padding: "28px 24px", cursor: "pointer", boxShadow: "0 8px 32px 0 rgba(0,0,0,0.3), inset 0 0 12px 2px rgba(255,255,255,0.15)", position: "relative", overflow: "hidden" }}>
+            <motion.div 
+              key={label} 
+              whileHover="hover"
+              className="ice-card" 
+              style={{ background: "rgba(255,255,255,0.12)", backdropFilter: "blur(30px) saturate(160%)", border: "1px solid rgba(255,255,255,0.3)", borderRadius: "12px", padding: "28px 24px", cursor: "pointer", position: "relative", overflow: "hidden" }}
+            >
               <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "1px", background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent)" }} />
               <div style={{ fontSize: 10, letterSpacing: 3, textTransform: "uppercase", color: "rgba(255,255,255,0.7)", marginBottom: 10, fontWeight: 600 }}>{label}</div>
               <div style={{ fontFamily: "var(--font-serif)", fontSize: 36, color: "var(--gold)", lineHeight: 1 }}>{score}</div>
-              <div style={{ marginTop: 12, height: 3, background: "rgba(255,255,255,0.1)", borderRadius: 2 }}>
-                <div style={{ width: `${score * 10}%`, height: "100%", background: "var(--gold)", borderRadius: 2, boxShadow: "0 0 10px var(--gold)" }} />
+              
+              {/* Progress Bar Container */}
+              <div style={{ marginTop: 15, height: 3, background: "rgba(255,255,255,0.05)", borderRadius: 4, overflow: "visible", position: "relative" }}>
+                
+                {/* The Animated Flowing Bar */}
+                <motion.div 
+                  initial={{ backgroundPosition: "200% 0" }}
+                  animate={{ backgroundPosition: ["200% 0", "-200% 0"] }}
+                  transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                  style={{ 
+                    width: `${score * 10}%`, 
+                    height: "100%", 
+                    borderRadius: 4, 
+                    position: "relative",
+                    background: "linear-gradient(90deg, #c9a03c 0%, #fde8c0 50%, #c9a03c 100%)",
+                    backgroundSize: "200% 100%",
+                  }} 
+                >
+                  {/* The Glowing Tip (Energy Head) - Removed the white circle here */}
+                  <motion.div
+                    animate={{
+                      opacity: [0.6, 1, 0.6],
+                      boxShadow: [
+                        "0 0 10px 1px rgba(201, 160, 60, 0.6)",
+                        "0 0 20px 4px rgba(201, 160, 60, 0.9)",
+                        "0 0 10px 1px rgba(201, 160, 60, 0.6)"
+                      ]
+                    }}
+                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                    style={{
+                      position: "absolute",
+                      right: 0,
+                      top: 0,
+                      width: "4px", // Tiny leading edge of light
+                      height: "100%",
+                      background: "var(--gold)",
+                      borderRadius: "0 4px 4px 0",
+                    }}
+                  />
+
+                  {/* Soft Light Bloom around the tip */}
+                  <div style={{
+                    position: "absolute",
+                    right: -5,
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                    width: "20px",
+                    height: "20px",
+                    background: "radial-gradient(circle, rgba(201, 160, 60, 0.4) 0%, transparent 70%)",
+                    filter: "blur(2px)",
+                    pointerEvents: "none"
+                  }} />
+                </motion.div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </section>
